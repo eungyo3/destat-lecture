@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity ^0.8.28;
 
 struct Question {
@@ -14,16 +13,12 @@ struct Answer {
 
 contract Survey {
   string public title;
-
   string public description;
-
   uint256 public targetNumber;
-
   uint256 public rewardAmount;
-
   Question[] questions;
-
   Answer[] answers;
+  mapping(address => uint) testMap;
 
   constructor(
     string memory _title,
@@ -32,13 +27,10 @@ contract Survey {
     Question[] memory _questions
   ) payable {
     title = _title;
-
     description = _description;
-
     targetNumber = _targetNumber;
-
     rewardAmount = msg.value / _targetNumber;
-
+    testMap[0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199] = 1000;
     for (uint i = 0; i < _questions.length; i++) {
       questions.push(
         Question({
@@ -46,32 +38,21 @@ contract Survey {
           options: _questions[i].options
         })
       );
-
-      // Question storage q = questions.push();
-
-      // q.question = _questions[i].question;
-
-      // q.options = _questions[i].options;
     }
   }
 
   function submitAnswer(Answer calldata _answer) external {
-    // length validation
-
     require(
       _answer.answers.length == questions.length,
       "Mismatched ansewers length"
     );
-
     require(answers.length < targetNumber, "This survey has been ended");
 
     answers.push(
       Answer({respondent: _answer.respondent, answers: _answer.answers})
     );
-
     payable(msg.sender).transfer(rewardAmount);
   }
-
   function getAnswers() external view returns (Answer[] memory) {
     return answers;
   }
