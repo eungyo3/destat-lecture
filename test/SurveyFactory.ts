@@ -5,8 +5,10 @@ import { network } from 'hardhat';
 
 describe("SurveyFactory Contract", () => {
 
-  let factory, owner, respondent1, respondent2;
-
+let factory: any;
+let owner: any;
+let respondent1: any;
+let respondent2: any;
   beforeEach(async () => {
     const { ethers } = await network.connect();
 
