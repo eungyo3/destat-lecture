@@ -31,3 +31,5 @@
 /snapshots
 
 /.vscode
+
+ignition/deployments/chain-31337/
